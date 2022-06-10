@@ -30,6 +30,9 @@ jobs: #job to execute?
         pwd
         ls
         
-    - name: Go Build
+    - name: Install denepndicies
       run:
-        go build
+        go mod init calc
+        go mod tidy
+        go get github.com/franela/goblin
+        go test -v
