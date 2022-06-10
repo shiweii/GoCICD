@@ -30,10 +30,6 @@ jobs: #job to execute?
         pwd
         ls
         
-    - name: Go Mod Init
+    - name: Go Build
       run:
-        go mod init
-        
-    - name: Go Mod Tidy
-      run:
-        go mod tidy
+        go build
