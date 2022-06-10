@@ -30,7 +30,10 @@ jobs: #job to execute?
         pwd
         ls
         
-    - name: Install dependencies
-      run: |
-        go get github.com/franela/goblin
-        go test -v
+    - name: Go Mod Init
+      run:
+        go mod init
+        
+    - name: Go Mod Tidy
+      run:
+        go mod tidy
