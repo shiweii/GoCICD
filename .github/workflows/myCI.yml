@@ -29,7 +29,7 @@ jobs: #job to execute?
       uses: actions/checkout@v2.4.2
       with:
         repository: lowkh2/GoSchoolRemoteExample
-        token: ${{ secrets.GO_SECRET_TOKEN }}
+        token: ${{secrets.GO_SECRET_TOKEN}}
         path: remote
     
     - name: Check Remote File
@@ -49,4 +49,22 @@ jobs: #job to execute?
         go mod init calc
         go mod tidy
         go get github.com/franela/goblin
+        go get github.com/tebeka/go2xunit
         go test -v
+        go test -v | go2xunit -output tests.xml
+        
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: tests.xml
+        
+    - if: ${{failure()}}
+      name: Create Issues Notifications
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+        title: Build Failed
+        token: ${{secrets.GITHUB_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: worflow-failed
+        body: Workflow failed for commit ${{github.sha}}
