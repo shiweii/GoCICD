@@ -26,4 +26,11 @@ jobs: #job to execute?
       uses: actions/checkout@v2.4.2
       
     - name: Check File System
-      run: ls
+      run: | 
+        pwd
+        ls
+        
+    - name: Install dependencies
+      run: |
+        go get github.com/franela/goblin
+        go test -v
