@@ -12,6 +12,11 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2.4.2
         
+      - name: Go Mod
+        run: |
+          go mod init calc
+          go mod tidy
+        
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3
         if: startsWith(github.ref, 'refs/tags/')
