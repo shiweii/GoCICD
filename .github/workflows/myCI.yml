@@ -31,7 +31,7 @@ jobs: #job to execute?
         ls
         
     - name: Install denepndicies
-      run:
+      run: |
         go mod init calc
         go mod tidy
         go get github.com/franela/goblin
