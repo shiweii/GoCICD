@@ -30,3 +30,12 @@ jobs:
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - if: ${{ failure() && startsWith(github.ref, 'refs/tags/') }}
+        name: Telegram Notify Failure
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Release ${{ github.ref_name }} fail.
