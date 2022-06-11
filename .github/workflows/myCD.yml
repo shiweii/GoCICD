@@ -26,11 +26,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: Telegram Notify Release Successful
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Release ${{ github.ref_name }} successfully.
+            
+            See Latest Release: https://github.com/${{ github.repository }}/releases
+          
       - if: ${{ failure() && startsWith(github.ref, 'refs/tags/') }}
         name: Telegram Notify Failure
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
+          message:
             Release ${{ github.ref_name }} fail.
