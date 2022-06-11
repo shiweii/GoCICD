@@ -10,6 +10,19 @@ jobs: #job to execute?
     name: Load OS #name for printing
     runs-on: ubuntu-latest #specify os in virtual machine
     steps:
+    - name: Telegram Notify
+      uses: appleboy/telegram-action@master
+      with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+    
     - name: Print hello
       run: | #run terminal command
         ls
