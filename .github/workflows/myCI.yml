@@ -42,7 +42,7 @@ jobs: #job to execute?
       uses: actions/checkout@v2.4.2
       with:
         repository: lowkh2/GoSchoolRemoteExample
-        token: ${{secrets.GO_SECRET_TOKEN}}
+        token: ${{ secrets.GO_SECRET_TOKEN }}
         path: remote
     
     - name: Check Remote File
@@ -77,10 +77,10 @@ jobs: #job to execute?
       uses: nashmaniac/create-issue-action@v1.1
       with:
         title: Build Failed
-        token: ${{secrets.GITHUB_TOKEN}}
-        assignees: ${{github.actor}}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        assignees: ${{ github.actor }}
         labels: worflow-failed
-        body: Workflow failed for commit ${{github.sha}}
+        body: Workflow failed for commit ${{ github.sha }}
         
     - if: ${{failure()}}
       name: Telegram Notify Failure
@@ -88,5 +88,7 @@ jobs: #job to execute?
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message:
-          Workflow failed for commit ${{github.sha}}
+        message: |
+          Workflow failed for commit ${{ github.sha }}
+          
+          See failed commit: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
